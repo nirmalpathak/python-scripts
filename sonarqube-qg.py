@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 
+############################################################
+# Script to fetch data from SonarQube RESTful API &
+#  parse JSON output to get Quality Gate status of project.
+############################################################
+
 import os, sys, json, requests
 
 arg = sys.argv[1]
 
+#Get current activity status of project's SonarQube scan.
 def get_status(status):
         staturl = "https://sonar.domain.net/api/ce/activity?status=IN_PROGRESS&q=com.domain:"+arg
         response = requests.get(staturl, auth=(os.environ['SONAR_USERNAME'], os.environ['SONAR_PASSWORD']))
@@ -11,6 +17,7 @@ def get_status(status):
         t = data['tasks']
         return len(t)
 
+#Get Quality Gate status of project.
 def get_qg(proj):
         qgurl = "https://sonar.domain.net/api/qualitygates/project_status?projectKey=com.domain:"+proj
         qgresp = requests.get(qgurl, auth=(os.environ['SONAR_USERNAME'], os.environ['SONAR_PASSWORD']))
