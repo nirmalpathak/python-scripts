@@ -37,6 +37,7 @@ if t != 0:
 else:
         qgstatus = get_qg(arg)
         print qgstatus
+        print ("SonarQube Background Task is not in progress!")
         if qgstatus == 'OK':
                 print '\033[1;32mQuality Gate PASSED!\033[1;m'
                 sys.exit(0)
