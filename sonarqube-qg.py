@@ -5,7 +5,7 @@
 #  parse JSON output to get Quality Gate status of project.
 ############################################################
 
-import os, sys, json, requests
+import os, sys, json, requests, time
 
 arg = sys.argv[1]
 
@@ -28,11 +28,14 @@ t = get_status(arg)
 print t
 if t != 0:
         print ("SonarQube Background Task is in progress!")
+        program_starts = time.time()
         while t != 0:
                 #print ("Background Task is in progress!")
                 t = get_status(arg)
                 #print t
+                now = time.time()
 
+        print("The background task was in progress for {0} .".format(now - program_starts))
         qgstatus = get_qg(arg)
         print qgstatus
         if qgstatus == 'OK':
